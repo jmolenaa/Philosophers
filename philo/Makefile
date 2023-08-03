@@ -7,7 +7,7 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = philo
-SRC = test.c
+SRC = philo.c error.c utils.c parse.c init.c
 OBJ = $(SRC:%.c=obj/%.o)
 OBJ_DIR = obj
 HEADERS = includes/philo.h
