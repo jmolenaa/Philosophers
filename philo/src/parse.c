@@ -6,11 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 17:16:30 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/03 16:07:27 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/08 14:57:37 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdlib.h>
 
 static bool	numbers_are_valid(t_data data_struct)
 {
@@ -18,7 +19,7 @@ static bool	numbers_are_valid(t_data data_struct)
 		wrong_input("Arguments should contain only digits");
 	else if (data_struct.error == 2)
 		wrong_input("One of the arguments is 0");
-	else if (data_struct.nbr_of_philos > 3000)
+	else if (data_struct.philo_nbr > 3000)
 		wrong_input("Table too small for this many philosophers");
 	else if (data_struct.time_to_die > DAY)
 		wrong_input("Saving electricity by not running a simulation for a day");
@@ -33,7 +34,7 @@ static bool	numbers_are_valid(t_data data_struct)
 	return (false);
 }
 
-static void	ft_atou(char *argv, unsigned int *nbr, int *error)
+static void	ft_atou(char *argv, int *nbr, int *error)
 {
 	int	i;
 
@@ -81,7 +82,7 @@ bool	parse_and_validate_input(int argc, char *argv[], t_data *data_struct)
 	if (strings_are_valid(argv) == false)
 		return (false);
 	data_struct->error = 0;
-	ft_atou(argv[1], &(data_struct->nbr_of_philos), &(data_struct->error));
+	ft_atou(argv[1], &(data_struct->philo_nbr), &(data_struct->error));
 	ft_atou(argv[2], &(data_struct->time_to_die), &(data_struct->error));
 	ft_atou(argv[3], &(data_struct->time_to_eat), &(data_struct->error));
 	ft_atou(argv[4], &(data_struct->time_to_sleep), &(data_struct->error));

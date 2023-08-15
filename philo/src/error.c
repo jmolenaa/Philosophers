@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 14:05:22 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/03 13:18:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/13 12:29:05 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ void	wrong_input(char *error_type)
 		"time_to_eat				(1 to 86400000)\n"
 		"time_to_sleep				(1 to 86400000)\n"
 		"nbr_of_times_each_philosopher_must_eat	(1 to 86400000)\n", 323);
+}
+
+void	error_message(char *message)
+{
+	write(2, RED"philo: ", 14);
+	write(2, message, ft_strlen(message));
+	write(2, END, 4);
 }

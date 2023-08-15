@@ -7,7 +7,7 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = philo
-SRC = philo.c error.c utils.c parse.c init.c
+SRC = philo.c error.c utils.c parse.c init.c time.c simulation.c philo_life_cycle.c
 OBJ = $(SRC:%.c=obj/%.o)
 OBJ_DIR = obj
 HEADERS = includes/philo.h
@@ -45,8 +45,8 @@ fclean: clean
 
 re: fclean all
 
-debug:
+d:
 	@$(MAKE) DEBUG=1
 
 run: all
-	./philo
+	./philo 5 300 100 100
