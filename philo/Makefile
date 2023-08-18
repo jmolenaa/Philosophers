@@ -7,7 +7,7 @@ CYAN=\033[1;36m
 END=\033[0m
 
 NAME = philo
-SRC = philo.c error.c utils.c parse.c init.c time.c simulation.c philo_life_cycle.c
+SRC = philo.c error.c utils.c parse.c init.c time.c simulation.c philo_life_cycle.c big_brother.c
 OBJ = $(SRC:%.c=obj/%.o)
 OBJ_DIR = obj
 HEADERS = includes/philo.h
@@ -16,7 +16,7 @@ HEADERS = includes/philo.h
 CC = gcc
 INCLUDES = -I includes
 ifdef DEBUG
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
 else
 CFLAGS = -Wall -Werror -Wextra
 endif
@@ -49,4 +49,10 @@ d:
 	@$(MAKE) DEBUG=1
 
 run: all
-	./philo 5 300 100 100
+	./philo 5 301 100 100
+
+ev: all
+	./philo 4 300 100 100
+
+big: all
+	./philo 150 300 100 100

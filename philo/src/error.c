@@ -6,11 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 14:05:22 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/13 12:29:05 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/16 10:23:33 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "defines.h"
 #include <unistd.h>
 
 void	wrong_input(char *error_type)

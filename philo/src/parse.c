@@ -6,11 +6,12 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 17:16:30 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/08 14:57:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/16 10:23:48 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include "defines.h"
 #include <stdlib.h>
 
 static bool	numbers_are_valid(t_data data_struct)
