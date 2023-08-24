@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 16:40:23 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 18:00:13 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/24 15:52:21 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ bool	am_i_dead(t_philo *philo)
 	{
 		philo->data_struct->stop_sim = true;
 		pthread_mutex_unlock(&philo->data_struct->death);
+		print_message(philo, DEAD, RED);
 		return (true);
 	}
 	pthread_mutex_unlock(&philo->data_struct->death);
@@ -63,14 +64,7 @@ void	print_message(t_philo *philo, char *message, char *colour)
 {
 	pthread_mutex_lock(&philo->data_struct->printing);
 	if (sim_should_stop(philo->data_struct) == false || message == DEAD)
-	{
-		if (am_i_dead(philo) == true)
-		{
-			message = DEAD;
-			colour = RED;
-		}
 		printf("%s%lu %d %s%s\n", colour, timestamp(philo->data_struct), philo->id, message, END);
-	}
 	pthread_mutex_unlock(&philo->data_struct->printing);
 }
 

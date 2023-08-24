@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 10:35:34 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 15:58:07 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/24 17:53:06 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	are_all_philos_alive(t_data *data_struct)
 	i = 0;
 	while (i < data_struct->philo_nbr)
 	{
-		// am_i_dead(&data_struct->philos[i]);
+		am_i_dead(&data_struct->philos[i]);
 		pthread_mutex_lock(&data_struct->death);
 		if (data_struct->stop_sim == true)
 		{
@@ -42,7 +42,7 @@ static void	*invigilation(void *data_struct)
 	{
 		if (are_all_philos_alive(data_struct) == false)
 			break ;
-		usleep(100);
+		usleep(1000);
 		// better_usleep(50, data_struct);
 	}
 	return (NULL);

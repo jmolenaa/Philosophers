@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:20:11 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:04:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/22 16:28:53 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ static bool	join_threads(t_data *data_struct)
 {
 	int	i;
 
-	// if (pthread_join(data_struct->big_brother, NULL) != 0)
-	// {
-	// 	error_message("error joining threads\n");
-	// 	return (false);
-	// }
+	if (pthread_join(data_struct->big_brother, NULL) != 0)
+	{
+		error_message("error joining threads\n");
+		return (false);
+	}
 	i = 0;
 	while (i < data_struct->philo_nbr)
 	{
@@ -85,11 +85,11 @@ bool	run_simulation(t_data *data_struct)
 	pthread_mutex_lock(&data_struct->start);
 	if (create_philo_threads(data_struct) == false)
 		return (false);
-	// if (create_big_brother(data_struct) == false)
-	// {
-	// 	join_threads_back(data_struct, data_struct->philo_nbr);
-	// 	return (false);
-	// }
+	if (create_big_brother(data_struct) == false)
+	{
+		join_threads_back(data_struct, data_struct->philo_nbr);
+		return (false);
+	}
 	data_struct->start_of_sim = timestamp(data_struct);
 	pthread_mutex_unlock(&data_struct->start);
 	if (join_threads(data_struct) == false)

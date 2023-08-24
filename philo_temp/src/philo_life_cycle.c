@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:22:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:59:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/24 15:40:20 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 void	eat(t_philo *philo)
 {
 	print_message(philo, EAT, GREEN);
+	pthread_mutex_lock(&philo->data_struct->death);
 	philo->time_of_last_eat = timestamp(philo->data_struct);
+	pthread_mutex_unlock(&philo->data_struct->death);
 	better_usleep(philo->data_struct->time_to_eat * 1000, philo);
 	philo->times_eaten++;
 	pthread_mutex_lock(&philo->data_struct->death);

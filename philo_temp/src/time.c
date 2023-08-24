@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/06 18:05:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:56:53 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/24 17:55:11 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include "philo.h"
-#include "defines.h"
 
 static long unsigned int	get_time_ms(void)
 {
@@ -39,8 +38,6 @@ void	better_usleep(long unsigned int time, t_philo *philo)
 	usleep(time / 2);
 	while (get_time_ms() * 1000 - start < time)
 	{
-		if (am_i_dead(philo) == true)
-			print_message(philo, DEAD, RED);
-		usleep(200);
+		usleep(100);
 	}
 }
