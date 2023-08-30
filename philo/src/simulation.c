@@ -6,25 +6,22 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:20:11 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 16:04:31 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:54:12 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 
-static void	join_threads_back(t_data *data_struct, int i)
+static void	join_threads_back(t_data *d_struct, int i)
 {
 	int	j;
 
-	data_struct->stop_sim = true;
-	pthread_mutex_unlock(&data_struct->start);
+	d_struct->stop_sim = true;
+	pthread_mutex_unlock(&d_struct->start);
 	j = 0;
 	while (j < i)
 	{
-		// if (j == 3)
-		// 	return ;
-		if (pthread_join(data_struct->philos[j].philo_thread, NULL) != 0)
+		if (pthread_join(d_struct->philos[j].philo_thread, NULL) != 0)
 		{
 			error_message("error joining threads\n");
 			return ;
@@ -33,24 +30,18 @@ static void	join_threads_back(t_data *data_struct, int i)
 	}
 }
 
-static bool	create_philo_threads(t_data *data_struct)
+static bool	create_philo_threads(t_data *d_struct)
 {
 	int	i;
 
 	i = 0;
-	while (i < data_struct->philo_nbr)
+	while (i < d_struct->ph_nb)
 	{
-		// if (i == 5)
-		// {
-		// 	error_message("thread creation failure\n");
-		// 	join_threads_back(data_struct, i);
-		// 	return (false);
-		// }
-		if (pthread_create(&(data_struct->philos[i].philo_thread), \
-			NULL, philo_life_cycle, &data_struct->philos[i]) != 0)
+		if (pthread_create(&(d_struct->philos[i].philo_thread), \
+			NULL, philo_life_cycle, &d_struct->philos[i]) != 0)
 		{
 			error_message("thread creation failure\n");
-			join_threads_back(data_struct, i);
+			join_threads_back(d_struct, i);
 			return (false);
 		}
 		i++;
@@ -58,19 +49,19 @@ static bool	create_philo_threads(t_data *data_struct)
 	return (true);
 }
 
-static bool	join_threads(t_data *data_struct)
+static bool	join_threads(t_data *d_struct)
 {
 	int	i;
 
-	// if (pthread_join(data_struct->big_brother, NULL) != 0)
-	// {
-	// 	error_message("error joining threads\n");
-	// 	return (false);
-	// }
-	i = 0;
-	while (i < data_struct->philo_nbr)
+	if (pthread_join(d_struct->big_brother, NULL) != 0)
 	{
-		if (pthread_join(data_struct->philos[i].philo_thread, NULL) != 0)
+		error_message("error joining threads\n");
+		return (false);
+	}
+	i = 0;
+	while (i < d_struct->ph_nb)
+	{
+		if (pthread_join(d_struct->philos[i].philo_thread, NULL) != 0)
 		{
 			error_message("error joining threads\n");
 			return (false);
@@ -80,19 +71,19 @@ static bool	join_threads(t_data *data_struct)
 	return (true);
 }
 
-bool	run_simulation(t_data *data_struct)
+bool	run_simulation(t_data *d_struct)
 {
-	pthread_mutex_lock(&data_struct->start);
-	if (create_philo_threads(data_struct) == false)
+	pthread_mutex_lock(&d_struct->start);
+	if (create_philo_threads(d_struct) == false)
 		return (false);
-	// if (create_big_brother(data_struct) == false)
-	// {
-	// 	join_threads_back(data_struct, data_struct->philo_nbr);
-	// 	return (false);
-	// }
-	data_struct->start_of_sim = timestamp(data_struct);
-	pthread_mutex_unlock(&data_struct->start);
-	if (join_threads(data_struct) == false)
+	if (create_big_brother(d_struct) == false)
+	{
+		join_threads_back(d_struct, d_struct->ph_nb);
+		return (false);
+	}
+	d_struct->start_of_sim = timestamp(d_struct);
+	pthread_mutex_unlock(&d_struct->start);
+	if (join_threads(d_struct) == false)
 		return (false);
 	return (true);
 }

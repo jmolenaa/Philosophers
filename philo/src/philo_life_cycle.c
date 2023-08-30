@@ -6,64 +6,71 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:22:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:59:14 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:54:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "defines.h"
-#include <unistd.h>
 
-void	eat(t_philo *philo)
+static void	count_meals(t_philo *philo)
+{
+	philo->times_eaten++;
+	pthread_mutex_lock(&philo->d_struct->death);
+	if (philo->d_struct->nbr_of_eats != 0 && \
+		philo->times_eaten == philo->d_struct->nbr_of_eats \
+		&& philo->full == false)
+	{
+		philo->d_struct->full_philos++;
+		philo->full = true;
+		if (philo->d_struct->full_philos == philo->d_struct->ph_nb)
+			philo->d_struct->stop_sim = true;
+	}
+	pthread_mutex_unlock(&philo->d_struct->death);
+}
+
+static void	eat(t_philo *philo)
 {
 	print_message(philo, EAT, GREEN);
-	philo->time_of_last_eat = timestamp(philo->data_struct);
-	better_usleep(philo->data_struct->time_to_eat * 1000, philo);
-	philo->times_eaten++;
-	pthread_mutex_lock(&philo->data_struct->death);
-	if (philo->times_eaten == philo->data_struct->nbr_of_eats)
-	{
-		philo->data_struct->full_philos++;
-		if (philo->data_struct->full_philos == philo->data_struct->philo_nbr)
-			philo->data_struct->stop_sim = true;
-	}
-	pthread_mutex_unlock(&philo->data_struct->death);
+	pthread_mutex_lock(&philo->d_struct->death);
+	philo->time_of_last_eat = timestamp(philo->d_struct);
+	pthread_mutex_unlock(&philo->d_struct->death);
+	better_usleep(philo->d_struct->time_to_eat * 1000, philo);
+	count_meals(philo);
 }
 
 static bool	take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data_struct->forks[philo->right_fork]);
+	pthread_mutex_lock(&philo->d_struct->forks[philo->right_fork]);
 	print_message(philo, FORK, YELLOW);
-	pthread_mutex_lock(&philo->data_struct->forks[philo->left_fork]);
+	pthread_mutex_lock(&philo->d_struct->forks[philo->left_fork]);
 	print_message(philo, FORK, YELLOW);
 	return (true);
 }
 
-static void	drop_forks(t_philo *philo)
+static void	drop_forks_and_sleep(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->data_struct->forks[philo->right_fork]);
-	pthread_mutex_unlock(&philo->data_struct->forks[philo->left_fork]);
-}
-
-static void	_sleep(t_philo *philo)
-{
+	pthread_mutex_unlock(&philo->d_struct->forks[philo->right_fork]);
+	pthread_mutex_unlock(&philo->d_struct->forks[philo->left_fork]);
 	print_message(philo, SLEEP, CYAN);
-	better_usleep(philo->data_struct->time_to_sleep * 1000, philo);
+	better_usleep(philo->d_struct->time_to_sleep * 1000, philo);
 	print_message(philo, THINK, MAGENTA);
 }
 
-void	*philo_life_cycle(void *philo)
+void	*philo_life_cycle(void *philosopher)
 {
-	pthread_mutex_lock(&((t_philo *)philo)->data_struct->start);
-	pthread_mutex_unlock(&((t_philo *)philo)->data_struct->start);
-	if (((t_philo *)philo)->id % 2 == 0)
-		better_usleep(((t_philo *)philo)->data_struct->time_to_eat * 100, ((t_philo *)philo));
-	while (sim_should_stop(((t_philo *)philo)->data_struct) == false)
+	t_philo	*philo;
+
+	philo = philosopher;
+	pthread_mutex_lock(&philo->d_struct->start);
+	pthread_mutex_unlock(&philo->d_struct->start);
+	if (philo->id % 2 == 0)
+		better_usleep(philo->d_struct->time_to_eat * 100, philo);
+	while (sim_should_stop(philo->d_struct) == false)
 	{
 		take_forks(philo);
 		eat(philo);
-		drop_forks(philo);
-		_sleep(philo);
+		drop_forks_and_sleep(philo);
 	}
 	return (NULL);
 }

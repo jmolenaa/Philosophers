@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   philo.c                                            :+:    :+:            */
+/*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 13:51:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/22 09:05:22 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 13:52:59 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 #include <stdlib.h>
 
 static void	safe_mutex_destroy(pthread_mutex_t *mutex)
@@ -23,60 +22,54 @@ static void	safe_mutex_destroy(pthread_mutex_t *mutex)
 	}
 }
 
-void	free_struct(t_data *data_struct)
+static void	free_struct(t_data *d_struct)
 {
 	int	i;
 
 	i = 0;
-	while (data_struct->forks != NULL && i < data_struct->philo_nbr)
+	while (d_struct->forks != NULL && i < d_struct->ph_nb)
 	{
-		safe_mutex_destroy(&data_struct->forks[i]);
+		safe_mutex_destroy(&d_struct->forks[i]);
 		i++;
 	}
-	safe_mutex_destroy(&data_struct->printing);
-	safe_mutex_destroy(&data_struct->death);
-	safe_mutex_destroy(&data_struct->start);
-	free(data_struct->philos);
-	free(data_struct->forks);
-	free(data_struct);
+	safe_mutex_destroy(&d_struct->printing);
+	safe_mutex_destroy(&d_struct->death);
+	safe_mutex_destroy(&d_struct->start);
+	free(d_struct->philos);
+	free(d_struct->forks);
+	free(d_struct);
 }
 
 void	lks(void)
 {
-	system("leaks philo");
+	system("leaks -q philo");
 }
+
+	// atexit(lks);
 
 int	main(int argc, char *argv[])
 {
-	t_data	*data_struct;
+	t_data	*d_struct;
+	int		return_value;
 
-	// atexit(lks);
+	return_value = 0;
 	if (argc != 5 && argc != 6)
 	{
 		wrong_input("Incorrect amount of arguments");
 		return (1);
 	}
-	data_struct = ft_calloc(sizeof(t_data));
-	if (data_struct == NULL)
+	d_struct = ft_calloc(sizeof(t_data));
+	if (d_struct == NULL)
 	{
 		error_message("malloc failure\n");
 		return (1);
 	}
-	if (parse_and_validate_input(argc, argv, data_struct) == false)
-	{
-		free_struct(data_struct);
-		return (1);
-	}
-	if (initialize_simulation(data_struct) == false)
-	{
-		free_struct(data_struct);
-		return (1);
-	}
-	if (run_simulation(data_struct) == false)
-	{
-		free_struct(data_struct);
-		return (1);
-	}
-	free_struct(data_struct);
-	return (0);
+	else if (parse_and_validate_input(argv, d_struct) == false)
+		return_value = 1;
+	else if (initialize_simulation(d_struct) == false)
+		return_value = 1;
+	else if (run_simulation(d_struct) == false)
+		return_value = 1;
+	free_struct(d_struct);
+	return (return_value);
 }
