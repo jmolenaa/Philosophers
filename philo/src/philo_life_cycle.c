@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:22:01 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:54:01 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 15:25:16 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	count_meals(t_philo *philo)
 	{
 		philo->d_struct->full_philos++;
 		philo->full = true;
-		if (philo->d_struct->full_philos == philo->d_struct->ph_nb)
+		if (philo->d_struct->full_philos == philo->d_struct->philo_nb)
 			philo->d_struct->stop_sim = true;
 	}
 	pthread_mutex_unlock(&philo->d_struct->death);

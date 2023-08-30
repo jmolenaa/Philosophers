@@ -20,6 +20,11 @@ CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
 else
 CFLAGS = -Wall -Werror -Wextra
 endif
+ifdef COLOUR
+COLOUR_FLAG = -D COLOUR=0
+else
+COLOUR_FLAG = 
+endif
 
 all: $(NAME)
 
@@ -30,7 +35,7 @@ $(NAME): $(OBJ)
 
 obj/%.o: src/%.c $(HEADERS) | $(OBJ_DIR)
 #	@echo "$(CYAN)Compiling $(<:src/%=%)$(END)"
-	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@ -c
+	$(CC) $(COLOUR_FLAG) $(CFLAGS) $(INCLUDES) $< -o $@ -c
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
@@ -56,3 +61,6 @@ ev: all
 
 big: all
 	./philo 150 300 100 100
+
+c:
+	@$(MAKE) COLOUR=1

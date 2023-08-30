@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 10:35:34 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:49:43 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 15:14:01 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,11 @@ static bool	are_all_philos_alive(t_data *d_struct)
 	int	i;
 
 	i = 0;
-	while (i < d_struct->ph_nb)
+	while (i < d_struct->philo_nb)
 	{
 		am_i_dead(&d_struct->philos[i]);
-		pthread_mutex_lock(&d_struct->death);
-		if (d_struct->stop_sim == true)
-		{
-			pthread_mutex_unlock(&d_struct->death);
+		if (sim_should_stop(d_struct) == true)
 			return (false);
-		}
-		pthread_mutex_unlock(&d_struct->death);
 		i++;
 	}
 	return (true);
@@ -43,7 +38,7 @@ static void	*invigilation(void *d_struct)
 			break ;
 		usleep(100);
 	}
-	if (((t_data *)d_struct)->ph_nb == 1)
+	if (((t_data *)d_struct)->philo_nb == 1)
 		pthread_mutex_unlock(&((t_data *)d_struct)->forks[0]);
 	return (NULL);
 }

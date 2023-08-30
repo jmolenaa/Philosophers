@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/10 11:20:11 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:54:12 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:27:57 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	create_philo_threads(t_data *d_struct)
 	int	i;
 
 	i = 0;
-	while (i < d_struct->ph_nb)
+	while (i < d_struct->philo_nb)
 	{
 		if (pthread_create(&(d_struct->philos[i].philo_thread), \
 			NULL, philo_life_cycle, &d_struct->philos[i]) != 0)
@@ -59,7 +59,7 @@ static bool	join_threads(t_data *d_struct)
 		return (false);
 	}
 	i = 0;
-	while (i < d_struct->ph_nb)
+	while (i < d_struct->philo_nb)
 	{
 		if (pthread_join(d_struct->philos[i].philo_thread, NULL) != 0)
 		{
@@ -78,7 +78,7 @@ bool	run_simulation(t_data *d_struct)
 		return (false);
 	if (create_big_brother(d_struct) == false)
 	{
-		join_threads_back(d_struct, d_struct->ph_nb);
+		join_threads_back(d_struct, d_struct->philo_nb);
 		return (false);
 	}
 	d_struct->start_of_sim = timestamp(d_struct);

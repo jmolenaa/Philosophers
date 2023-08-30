@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/21 15:20:37 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:53:38 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:27:57 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int					ph_nb;
+	int					philo_nb;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;

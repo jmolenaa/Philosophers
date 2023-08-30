@@ -6,13 +6,16 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/16 10:19:41 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/16 10:20:41 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:58:36 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
+# ifndef COLOUR
+#  define COLOUR 1
+# endif
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define YELLOW "\033[1;33m"

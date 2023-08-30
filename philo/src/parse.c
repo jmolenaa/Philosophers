@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 17:16:30 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:53:30 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:42:45 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static bool	numbers_are_valid(t_data d_struct)
 		wrong_input("Arguments should contain only digits");
 	else if (d_struct.error == 2)
 		wrong_input("One of the arguments is 0");
-	else if (d_struct.ph_nb > 3000)
+	else if (d_struct.philo_nb > 3000)
 		wrong_input("Table too small for this many philosophers");
 	else if (d_struct.time_to_die > DAY)
 		wrong_input("Saving electricity by not running a simulation for a day");
@@ -35,7 +35,7 @@ static bool	numbers_are_valid(t_data d_struct)
 	return (false);
 }
 
-static void	ft_atou(char *argv, int *nbr, int *error)
+static void	ft_atoi(char *argv, int *nbr, int *error)
 {
 	int	i;
 
@@ -82,11 +82,11 @@ bool	parse_and_validate_input(char *argv[], t_data *d_struct)
 	if (strings_are_valid(argv) == false)
 		return (false);
 	d_struct->error = 0;
-	ft_atou(argv[1], &(d_struct->ph_nb), &(d_struct->error));
-	ft_atou(argv[2], &(d_struct->time_to_die), &(d_struct->error));
-	ft_atou(argv[3], &(d_struct->time_to_eat), &(d_struct->error));
-	ft_atou(argv[4], &(d_struct->time_to_sleep), &(d_struct->error));
-	ft_atou(argv[5], &(d_struct->nbr_of_eats), &(d_struct->error));
+	ft_atoi(argv[1], &(d_struct->philo_nb), &(d_struct->error));
+	ft_atoi(argv[2], &(d_struct->time_to_die), &(d_struct->error));
+	ft_atoi(argv[3], &(d_struct->time_to_eat), &(d_struct->error));
+	ft_atoi(argv[4], &(d_struct->time_to_sleep), &(d_struct->error));
+	ft_atoi(argv[5], &(d_struct->nbr_of_eats), &(d_struct->error));
 	if (numbers_are_valid(*d_struct) == false)
 		return (false);
 	return (true);

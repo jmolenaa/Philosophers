@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 13:51:08 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:52:59 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 15:09:45 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	free_struct(t_data *d_struct)
 	int	i;
 
 	i = 0;
-	while (d_struct->forks != NULL && i < d_struct->ph_nb)
+	while (d_struct->forks != NULL && i < d_struct->philo_nb)
 	{
 		safe_mutex_destroy(&d_struct->forks[i]);
 		i++;
