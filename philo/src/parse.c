@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 17:16:30 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:42:45 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/31 09:30:07 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	ft_atoi(char *argv, int *nbr, int *error)
 		*nbr = INT32_MAX;
 }
 
-static bool	strings_are_valid(char *argv[])
+static bool	strings_are_empty_or_have_leading_zeros(char *argv[])
 {
 	int	i;
 
@@ -72,14 +72,14 @@ static bool	strings_are_valid(char *argv[])
 			i++;
 			continue ;
 		}
-		return (false);
+		return (true);
 	}
-	return (true);
+	return (false);
 }
 
 bool	parse_and_validate_input(char *argv[], t_data *d_struct)
 {
-	if (strings_are_valid(argv) == false)
+	if (strings_are_empty_or_have_leading_zeros(argv) == true)
 		return (false);
 	d_struct->error = 0;
 	ft_atoi(argv[1], &(d_struct->philo_nb), &(d_struct->error));

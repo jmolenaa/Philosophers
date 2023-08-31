@@ -6,7 +6,7 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/06 18:05:46 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/30 13:54:37 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/08/30 16:08:36 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	better_usleep(long unsigned int time, t_philo *philo)
 		return ;
 	start = get_time_ms() * 1000;
 	while (get_time_ms() * 1000 - start < time \
-			&& am_i_dead(philo) == false)
+			&& sim_should_stop(philo->d_struct) == false)
 		usleep(500);
 }

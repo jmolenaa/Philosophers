@@ -29,38 +29,29 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJ)
-#	@echo "${YELLOW}Compiling $@${END}"
-	$(CC) $(CFLAGS) $^ -o $@
-#	@echo "${GREEN}Done compiling${END}"
+	@echo "${YELLOW}Compiling $@${END}"
+	@$(CC) $(CFLAGS) $^ -o $@
+	@echo "${GREEN}Done compiling${END}"
 
 obj/%.o: src/%.c $(HEADERS) | $(OBJ_DIR)
-#	@echo "$(CYAN)Compiling $(<:src/%=%)$(END)"
-	$(CC) $(COLOUR_FLAG) $(CFLAGS) $(INCLUDES) $< -o $@ -c
+	@echo "$(CYAN)Compiling $(<:src/%=%)$(END)"
+	@$(CC) $(COLOUR_FLAG) $(CFLAGS) $(INCLUDES) $< -o $@ -c
 
 $(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)
 
 clean:
-#	@echo "${RED}Removing obj files${END}"
-	rm -rf $(OBJ_DIR)
+	@echo "${RED}Removing obj files${END}"
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-#	@echo "${RED}Removing binary${END}"
-	rm -rf $(NAME)
+	@echo "${RED}Removing binary${END}"
+	@rm -rf $(NAME)
 
 re: fclean all
 
-d:
+d: fclean
 	@$(MAKE) DEBUG=1
 
-run: all
-	./philo 5 301 100 100
-
-ev: all
-	./philo 4 300 100 100
-
-big: all
-	./philo 150 300 100 100
-
-c:
+c: fclean
 	@$(MAKE) COLOUR=1
