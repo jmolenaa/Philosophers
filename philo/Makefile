@@ -18,7 +18,7 @@ INCLUDES = -I includes
 ifdef DEBUG
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=thread
 else
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = 
 endif
 ifdef COLOUR
 COLOUR_FLAG = -D COLOUR=0

@@ -6,13 +6,14 @@
 /*   By: jmolenaa <jmolenaa@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/31 17:16:30 by jmolenaa      #+#    #+#                 */
-/*   Updated: 2023/08/31 09:30:07 by jmolenaa      ########   odam.nl         */
+/*   Updated: 2023/11/01 08:02:25 by jmolenaa      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "defines.h"
 #include <stdlib.h>
+#include <limits.h>
 
 static bool	numbers_are_valid(t_data d_struct)
 {
@@ -53,7 +54,7 @@ static void	ft_atoi(char *argv, int *nbr, int *error)
 	else if (*nbr == 0 && *error == 0)
 		*error = 2;
 	else if (i > 9 && *error == 0)
-		*nbr = INT32_MAX;
+		*nbr = INT_MAX;
 }
 
 static bool	strings_are_empty_or_have_leading_zeros(char *argv[])
