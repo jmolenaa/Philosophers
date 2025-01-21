@@ -1,7 +1,5 @@
 # Philosophers
 
-**"I never thought philosophy would be so deadly."**
-
 In this project, you will learn the basics of threading and synchronization mechanisms. You will implement a simulation of the classic ["Dining Philosophers"](https://en.wikipedia.org/wiki/Dining_philosophers_problem) problem, exploring how to create and manage threads, as well as how to use mutexes for safe resource sharing.
 
 
